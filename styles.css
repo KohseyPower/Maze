@@ -1,0 +1,26 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.grille {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    height: 50rem;
+    width: 50rem;
+    outline: 0.2rem solid black;
+}
+
+.cellule {
+    height: 6.25%;
+    width: 6.25%;
+    outline: 0.12rem solid black;
+}
