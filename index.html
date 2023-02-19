@@ -32,23 +32,32 @@
 
         //fonction qui crée le labyrinthe (Recursive implementation Depth-first Search)
 
-        function voisinsNonVisitésCondition(cellule, ligne, colonne) {
+        function voisinsNonVisitésCondition(cellule, ligne, colonne, max) {
+            let voisinDroit;
+            let voisinBas;
+            let voisinGauche;
+            let voisinHaut;
             // Selecteurs des voisins autour de la cellule donné en argument
             let colonneDroit = colonne + 1;
+            if (colonneDroit >= 0 && colonneDroit < max) {
+                voisinDroit = document.querySelector(".cellLigne" + ligne + ".cellColonne" + colonneDroit);
 
-            let voisinDroit = document.querySelector(".cellLigne" + ligne + ".cellColonne" + colonneDroit);
-
+            }
             let ligneBas = ligne + 1;
+            if (ligneBas >= 0 && ligneBas < max) {
+                voisinBas = document.querySelector(".cellLigne" + ligneBas + ".cellColonne" + colonne);
 
-            let voisinBas = document.querySelector(".cellLigne" + ligneBas + ".cellColonne" + colonne);
-
+            }
             let colonneGauche = ligne - 1;
+            if (colonneGauche >= 0 && colonneGauche < max) {
+                voisinGauche = document.querySelector(".cellLigne" + ligne + ".cellColonne" + colonneGauche);
 
-            let voisinGauche = document.querySelector(".cellLigne" + ligne + ".cellColonne" + colonneGauche);
-
+            }
             let ligneHaut = ligne - 1;
+            if (ligneHaut >= 0 && ligneHaut < max) {
+                voisinHaut = document.querySelector(".cellLigne" + ligneHaut + ".cellColonne" + colonne);
 
-            let voisinHaut = document.querySelector(".cellLigne" + ligneHaut + ".cellColonne" + colonne);
+            }
 
             const arrV = [
                 voisinDroit,
@@ -195,6 +204,22 @@
             return false;
         }
 
+        function miseAJourLigne(cell, ligne) {
+            for (e of cell.classList) {
+                if (/^cellLigne\d+$/.test(e) === true) {
+                    return parseInt(e.substr(9));
+                }
+            }
+        }
+
+        function miseAJourColonne(cell, colonne) {
+            for (e of cell.classList) {
+                if (/^cellColonne\d+$/.test(e) === true) {
+                    return parseInt(e.substr(11));
+                }
+            }
+        }
+
         let ligneActuelle = 0;
         let colonneActuelle = 0;
 
@@ -203,6 +228,7 @@
             let celluleActuelle = document.querySelector(".cellLigne" + ligneActuelle + ".cellColonne" + colonneActuelle)
             celluleActuelle.classList.remove("nonVisitée")
             while (presenceCelluleNonVisitée() === true) {
+
                 //tant que toutes les cellules n'ont pas encore été visitées
                 if (voisinsNonVisitésCondition(celluleActuelle, ligneActuelle, colonneActuelle, x) === true) {
                     listeVoisins = voisinsNonVisités(celluleActuelle, ligneActuelle, colonneActuelle, x);
@@ -213,8 +239,13 @@
                     pile.push(randomVoisin);
                     //le voisin est la cellule actuelle
                     celluleActuelle = randomVoisin;
+
                     //la cellule Actuelle est visitée
                     celluleActuelle.classList.remove("nonVisitée");
+
+                    //mettre à jour les valeurs de ligneActuelle et colonneActuelle
+                    ligneActuelle = miseAJourLigne(celluleActuelle, ligneActuelle);
+                    colonneActuelle = miseAJourColonne(celluleActuelle, colonneActuelle);
 
                 }
                 // sinon si la pile n'est pas vide
