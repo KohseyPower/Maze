@@ -22,5 +22,5 @@ body {
 .cellule {
     height: 6.25%;
     width: 6.25%;
-    outline: 0.12rem solid black;
+    border: 0.12rem solid black;
 }
