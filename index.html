@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <h1>Ceci est une grille</h1>
+    <h1>génération aléatoire d'un labyrinthe avec un DFS</h1>
     <div class="grille">
 
     </div>
@@ -33,55 +33,7 @@
         //fonction qui crée le labyrinthe (Recursive implementation Depth-first Search)
 
         function voisinsNonVisitésCondition(cellule, ligne, colonne, max) {
-            let voisinDroit;
-            let voisinBas;
-            let voisinGauche;
-            let voisinHaut;
-            // Selecteurs des voisins autour de la cellule donné en argument
-            let colonneDroit = colonne + 1;
-            if (colonneDroit >= 0 && colonneDroit < max) {
-                voisinDroit = document.querySelector(".cellLigne" + ligne + ".cellColonne" + colonneDroit);
-
-            }
-            let ligneBas = ligne + 1;
-            if (ligneBas >= 0 && ligneBas < max) {
-                voisinBas = document.querySelector(".cellLigne" + ligneBas + ".cellColonne" + colonne);
-
-            }
-            let colonneGauche = ligne - 1;
-            if (colonneGauche >= 0 && colonneGauche < max) {
-                voisinGauche = document.querySelector(".cellLigne" + ligne + ".cellColonne" + colonneGauche);
-
-            }
-            let ligneHaut = ligne - 1;
-            if (ligneHaut >= 0 && ligneHaut < max) {
-                voisinHaut = document.querySelector(".cellLigne" + ligneHaut + ".cellColonne" + colonne);
-
-            }
-
-            const arrV = [
-                voisinDroit,
-                voisinBas,
-                voisinGauche,
-                voisinHaut
-            ];
-
-            for (let v of arrV) {
-                for (let e of v.classList) {
-                    if (e === "nonVisitée") {
-                        return true;
-                    }
-                }
-            }
-
-
-            return false;
-
-
-        }
-
-        function voisinsNonVisités(cellule, ligne, colonne, max) {
-            const arrV = [];
+            let arrV = [];
             // Selecteurs des voisins autour de la cellule donné en argument
             let colonneDroit = colonne + 1;
             if (colonneDroit >= 0 && colonneDroit < max) {
@@ -93,7 +45,47 @@
                 let voisinBas = document.querySelector(".cellLigne" + ligneBas + ".cellColonne" + colonne);
                 arrV.push(voisinBas);
             }
-            let colonneGauche = ligne - 1;
+            let colonneGauche = colonne - 1;
+            if (colonneGauche >= 0 && colonneGauche < max) {
+                let voisinGauche = document.querySelector(".cellLigne" + ligne + ".cellColonne" + colonneGauche);
+                arrV.push(voisinGauche);
+            }
+            let ligneHaut = ligne - 1;
+            if (ligneHaut >= 0 && ligneHaut < max) {
+                let voisinHaut = document.querySelector(".cellLigne" + ligneHaut + ".cellColonne" + colonne);
+                arrV.push(voisinHaut);
+            }
+
+            if (arrV.length > 0) {
+                for (let v of arrV) {
+                    for (let e of v.classList) {
+                        if (e === "nonVisitée") {
+                            return true;
+                        }
+                    }
+                }
+            }
+
+
+            return false;
+
+
+        }
+
+        function voisinsNonVisités(cellule, ligne, colonne, max) {
+            let arrV = [];
+            // Selecteurs des voisins autour de la cellule donné en argument
+            let colonneDroit = colonne + 1;
+            if (colonneDroit >= 0 && colonneDroit < max) {
+                let voisinDroit = document.querySelector(".cellLigne" + ligne + ".cellColonne" + colonneDroit);
+                arrV.push(voisinDroit);
+            }
+            let ligneBas = ligne + 1;
+            if (ligneBas >= 0 && ligneBas < max) {
+                let voisinBas = document.querySelector(".cellLigne" + ligneBas + ".cellColonne" + colonne);
+                arrV.push(voisinBas);
+            }
+            let colonneGauche = colonne - 1;
             if (colonneGauche >= 0 && colonneGauche < max) {
                 let voisinGauche = document.querySelector(".cellLigne" + ligne + ".cellColonne" + colonneGauche);
                 arrV.push(voisinGauche);
@@ -225,8 +217,8 @@
 
         function labyrinthe(x) {
             let pile = [];
-            let celluleActuelle = document.querySelector(".cellLigne" + ligneActuelle + ".cellColonne" + colonneActuelle)
-            celluleActuelle.classList.remove("nonVisitée")
+            let celluleActuelle = document.querySelector(".cellLigne" + ligneActuelle + ".cellColonne" + colonneActuelle);
+            celluleActuelle.classList.remove("nonVisitée");
             while (presenceCelluleNonVisitée() === true) {
 
                 //tant que toutes les cellules n'ont pas encore été visitées
@@ -247,13 +239,14 @@
                     ligneActuelle = miseAJourLigne(celluleActuelle, ligneActuelle);
                     colonneActuelle = miseAJourColonne(celluleActuelle, colonneActuelle);
 
-                }
-                // sinon si la pile n'est pas vide
-                else if (!(pile === undefined || pile.length == 0)) {
+                } else if (pile.length > 0) {
                     // enleve le dernier element de la pile
                     pile.pop();
                     // faire le dernier element de la pile la cellule actuelle
                     celluleActuelle = pile[pile.length - 1];
+                    //mettre à jour les valeurs de ligneActuelle et colonneActuelle
+                    ligneActuelle = miseAJourLigne(celluleActuelle, ligneActuelle);
+                    colonneActuelle = miseAJourColonne(celluleActuelle, colonneActuelle);
                 }
             }
 
@@ -263,6 +256,8 @@
         window.onload = function() {
             créerGrille(LONGUEURE);
             labyrinthe(LONGUEURE);
+
+
         }
     </script>
 </body>
