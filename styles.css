@@ -10,6 +10,10 @@ body {
     min-height: 100vh;
 }
 
+h1 {
+    text-align: center;
+}
+
 .grille {
     display: flex;
     flex-wrap: wrap;
@@ -23,4 +27,11 @@ body {
     height: 6.25%;
     width: 6.25%;
     border: 0.12rem solid black;
+}
+
+@media (max-width: 790px) {
+    .grille {
+        height: 20rem;
+        width: 20rem;
+    }
 }
