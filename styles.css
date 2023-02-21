@@ -1,3 +1,14 @@
+:root {
+    --primary-light: #8abdff;
+    --primary: #6d5dfc;
+    --primary-dark: #5b0eeb;
+    --white: #FFFFFF;
+    --greyLight-1: #E4EBF5;
+    --greyLight-2: #c8d0e7;
+    --greyLight-3: #bec8e4;
+    --greyDark: #9baacf;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -8,10 +19,37 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    background: var(--greyLight-1);
 }
 
 h1 {
     text-align: center;
+}
+
+.btn {
+    margin-bottom: 2rem;
+    width: 8rem;
+    height: 3rem;
+    border-radius: 1rem;
+    box-shadow: .3rem .3rem .6rem var(--greyLight-2), -.2rem -.2rem .5rem var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: .2s ease;
+    font-size: 1rem;
+}
+
+.btn .générer {
+    color: var(--greyDark);
+}
+
+.btn .générer:hover {
+    color: var(--primary);
+}
+
+.btn .générer:active {
+    box-shadow: inset .2rem .2rem .5rem var(--greyLight-2), inset -.2rem -.2rem .5rem var(--white);
 }
 
 .grille {
