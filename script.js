@@ -1,3 +1,5 @@
+const LONGUEURE = 16;
+let arrayCells = [LONGUEURE];
 // Fonction qui initialise les cellules dans la grilles
 function créerGrille(x) {
     for (let i = 0; i < x; i++) {
@@ -245,14 +247,152 @@ function réinitialiser() {
     }
 }
 
+function miseAJourArrayCells(x) {
+    let arrC = document.querySelectorAll(".grille > .cellule");
+    let i = 0;
+    // droite --> bas --> gauche --> haut
+    // 1 s'il y a un mur sinon 0
+    for (cell of arrC) {
+        //border droite
+        if (cell.style.borderRight == "medium none") {
+            arrayCells[i][1] = 0;
+        } else {
+            arrayCells[i][1] = 1;
+        }
+        //border bas
+        if (cell.style.borderBottom == "medium none") {
+            arrayCells[i][2] = 0;
+        } else {
+            arrayCells[i][2] = 1;
+        }
+        //border gauche
+        if (cell.style.borderLeft == "medium none") {
+            arrayCells[i][3] = 0;
+        } else {
+            arrayCells[i][3] = 1;
+        }
+        //border haut
+        if (cell.style.borderTop == "medium none") {
+            arrayCells[i][4] = 0;
+        } else {
+            arrayCells[i][4] = 1;
+        }
+        i++;
+    }
+    //initialiser les entités à 0
+    initialiserArrayCellsEntités(x);
+    //placer le départ
+    positionDépart(x);
+    //placer la fin
+    positionFin(x);
+}
 
-const LONGUEURE = 16;
+function positionDépart(x) {
+    //position au niveau de arrayCells
+    let position = Math.floor((Math.random() * x * x));
+    arrayCells[position][0] = "départ";
+
+}
+
+function positionFin(x) {
+    //position au niveau de arrayCells
+    let position = Math.floor((Math.random() * x * x));
+    while (arrayCells[position][0] !== 0) {
+        position = Math.floor((Math.random() * x * x));
+    }
+    arrayCells[position][0] = "fin";
+
+}
+
+
+
+function initialiserArrayCellsEntités(x) {
+    for (let i = 0; i < x * x; i++) {
+        arrayCells[i][0] = 0;
+    }
+}
+
+
+
+function jeu(x) {
+
+    //Activer les flèches directionnelles
+    //Pour chaque flèche pressé, regader si le joueur peut passe, s'il peut, changer position joueur sinon rien faire
+}
+
+function initialiserArrayCells(x) {
+    const TAILLE_CELL = 5;
+    let arrC = document.querySelectorAll(".grille > .cellule");
+    let i = 0;
+
+    //initialisation des murs
+    for (cell of arrC) {
+        cellInfo = [TAILLE_CELL];
+        //border droite
+        if (cell.style.borderRight == "medium none") {
+            cellInfo[1] = 0;
+        } else {
+            cellInfo[1] = 1;
+        }
+        //border bas
+        if (cell.style.borderBottom == "medium none") {
+            cellInfo[2] = 0;
+        } else {
+            cellInfo[2] = 1;
+        }
+        //border gauche
+        if (cell.style.borderLeft == "medium none") {
+            cellInfo[3] = 0;
+        } else {
+            cellInfo[3] = 1;
+        }
+        //border haut
+        if (cell.style.borderTop == "medium none") {
+            cellInfo[4] = 0;
+        } else {
+            cellInfo[4] = 1;
+        }
+        arrayCells[i] = cellInfo;
+        i++;
+    }
+    //initialiser les entités à 0
+    initialiserArrayCellsEntités(x);
+    //placer le départ
+    positionDépart(x);
+    //placer la fin
+    positionFin(x);
+
+}
+
+function afficherJeu(x) {
+    for (let i = 0; i < x * x; i++) {
+        if (arrayCells[i][0] == "fin") {
+            document.querySelector(".grille").children.item(i).style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--rougeFin');
+        } else if (arrayCells[i][0] == "départ") {
+            document.querySelector(".grille").children.item(i).style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--vertDépart');
+        } else {
+            document.querySelector(".grille").children.item(i).style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--greyLight-1');
+        }
+
+    }
+}
+
 window.onload = function() {
     créerGrille(LONGUEURE);
     labyrinthe(LONGUEURE);
+    initialiserArrayCells(LONGUEURE);
+    afficherJeu(LONGUEURE);
+
 }
 
-document.querySelector(".générer").addEventListener('click', (event) => {
+document.querySelector(".générer").addEventListener('click', () => {
     réinitialiser();
     labyrinthe(LONGUEURE);
+    initialiserArrayCells(LONGUEURE);
+    afficherJeu(LONGUEURE);
+
+});
+
+document.querySelector(".jouer").addEventListener('click', () => {
+    jeu(LONGUEURE);
 });
