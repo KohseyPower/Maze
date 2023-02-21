@@ -1,5 +1,7 @@
 const LONGUEURE = 16;
 let arrayCells = [LONGUEURE];
+let touchesDirectionnellesActivees = false;
+
 // Fonction qui initialise les cellules dans la grilles
 function créerGrille(x) {
     for (let i = 0; i < x; i++) {
@@ -247,45 +249,7 @@ function réinitialiser() {
     }
 }
 
-function miseAJourArrayCells(x) {
-    let arrC = document.querySelectorAll(".grille > .cellule");
-    let i = 0;
-    // droite --> bas --> gauche --> haut
-    // 1 s'il y a un mur sinon 0
-    for (cell of arrC) {
-        //border droite
-        if (cell.style.borderRight == "medium none") {
-            arrayCells[i][1] = 0;
-        } else {
-            arrayCells[i][1] = 1;
-        }
-        //border bas
-        if (cell.style.borderBottom == "medium none") {
-            arrayCells[i][2] = 0;
-        } else {
-            arrayCells[i][2] = 1;
-        }
-        //border gauche
-        if (cell.style.borderLeft == "medium none") {
-            arrayCells[i][3] = 0;
-        } else {
-            arrayCells[i][3] = 1;
-        }
-        //border haut
-        if (cell.style.borderTop == "medium none") {
-            arrayCells[i][4] = 0;
-        } else {
-            arrayCells[i][4] = 1;
-        }
-        i++;
-    }
-    //initialiser les entités à 0
-    initialiserArrayCellsEntités(x);
-    //placer le départ
-    positionDépart(x);
-    //placer la fin
-    positionFin(x);
-}
+
 
 function positionDépart(x) {
     //position au niveau de arrayCells
@@ -314,14 +278,18 @@ function initialiserArrayCellsEntités(x) {
 
 
 
-function jeu(x) {
-
-    //Activer les flèches directionnelles
-    //Pour chaque flèche pressé, regader si le joueur peut passe, s'il peut, changer position joueur sinon rien faire
+function initialisationCurseur(x) {
+    for (let i = 0; i < x * x; i++) {
+        if (arrayCells[i][0] === "départ") {
+            arrayCells[i][5] = "curseur";
+        } else {
+            arrayCells[i][5] = 0;
+        }
+    }
 }
 
 function initialiserArrayCells(x) {
-    const TAILLE_CELL = 5;
+    const TAILLE_CELL = 6;
     let arrC = document.querySelectorAll(".grille > .cellule");
     let i = 0;
 
@@ -361,7 +329,21 @@ function initialiserArrayCells(x) {
     positionDépart(x);
     //placer la fin
     positionFin(x);
+    //placer curseur
+    initialisationCurseur(x);
 
+}
+
+function créerCurseur(cell) {
+    console.log(cell);
+    // Create a new inner div element
+    const innerDiv = document.createElement("div");
+
+    // Set properties of the inner div
+    innerDiv.className = "curseur"; // Added a class called "my-class"
+
+    // Append the inner div to the outer div
+    cell.appendChild(innerDiv);
 }
 
 function afficherJeu(x) {
@@ -370,11 +352,50 @@ function afficherJeu(x) {
             document.querySelector(".grille").children.item(i).style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--rougeFin');
         } else if (arrayCells[i][0] == "départ") {
             document.querySelector(".grille").children.item(i).style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--vertDépart');
+
         } else {
             document.querySelector(".grille").children.item(i).style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--greyLight-1');
         }
+        if (arrayCells[i][5] == "curseur") {
+            créerCurseur(document.querySelector(".grille").children.item(i));
 
+        }
     }
+}
+
+function positionnerCurseur(x) {
+    for (let i = 0; i < x * x; i++) {
+        if (arrayCells[i][5] === "curseur") {
+            return i;
+        }
+    }
+}
+
+function jeu(x) {
+    touchesDirectionnellesActivees = true;
+    positionCurseur = positionnerCurseur(x);
+    document.addEventListener("keydown", function(e) {
+        if (touchesDirectionnellesActivees) {
+            if (e.code === "ArrowLeft" && arrayCells[positionCurseur][3] === 0) {
+                // Touche de direction gauche
+                console.log("gauche");
+            } else if (e.code === "ArrowUp" && arrayCells[positionCurseur][4] === 0) {
+                // Touche de direction haut
+                console.log("haut");
+            } else if (e.code === "ArrowRight" && arrayCells[positionCurseur][1] === 0) {
+                // Touche de direction droite
+                console.log("droite");
+            } else if (e.code === "ArrowDown" && arrayCells[positionCurseur][2] === 0) {
+                // Touche de direction bas
+                console.log("bas");
+            }
+        }
+    });
+
+}
+
+function désactiverJeu() {
+    touchesDirectionnellesActivees = false;
 }
 
 window.onload = function() {
@@ -386,6 +407,7 @@ window.onload = function() {
 }
 
 document.querySelector(".générer").addEventListener('click', () => {
+    désactiverJeu();
     réinitialiser();
     labyrinthe(LONGUEURE);
     initialiserArrayCells(LONGUEURE);
@@ -396,3 +418,5 @@ document.querySelector(".générer").addEventListener('click', () => {
 document.querySelector(".jouer").addEventListener('click', () => {
     jeu(LONGUEURE);
 });
+
+// une affectation du tableau arrayCells est composé de la manière suivante : arrayCells[position][lieu][mur droit][mur bas][mur gauche][mur haut][position du curseur]

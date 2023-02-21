@@ -20,7 +20,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    min-height: 95vh;
     background: var(--greyLight-1);
 }
 
@@ -68,9 +68,18 @@ h1 {
 }
 
 .cellule {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 6.25%;
     width: 6.25%;
     border: 0.12rem solid black;
+}
+
+.curseur {
+    height: 1rem;
+    width: 1rem;
+    background-color: black;
 }
 
 @media (max-width: 790px) {
