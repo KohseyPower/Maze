@@ -356,8 +356,6 @@ function enleverAncienCurseur() {
 
 function afficherJeu(x) {
     for (let i = 0; i < x * x; i++) {
-        //désafficher le curseur
-
         if (arrayCells[i][0] == "fin") {
             document.querySelector(".grille").children.item(i).style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--rougeFin');
         } else if (arrayCells[i][0] == "départ") {
@@ -381,30 +379,42 @@ function positionnerCurseur(x) {
 }
 
 function jeu(x) {
+
     touchesDirectionnellesActivees = true;
     positionCurseur = positionnerCurseur(x);
-    document.addEventListener("keydown", function (e) {
+    document.addEventListener("keydown", function(e) {
         if (touchesDirectionnellesActivees) {
             if (e.code === "ArrowLeft" && arrayCells[positionCurseur][3] === 0) {
                 // Touche de direction gauche
                 //on enleve la donnée curseur
-                //arrayCells[positionCurseur][5] = 0;
+                arrayCells[positionCurseur][5] = 0;
                 //on affecte la donnée curseur à la cellule suivante
-                //arrayCells[positionCurseur][5] = "curseur";
-                //afficherJeu(x);
+                arrayCells[positionCurseur - 1][5] = "curseur";
+                afficherJeu(x);
                 console.log("gauche");
             } else if (e.code === "ArrowUp" && arrayCells[positionCurseur][4] === 0) {
                 // Touche de direction haut
+                arrayCells[positionCurseur][5] = 0;
+                arrayCells[positionCurseur - x][5] = "curseur";
+                afficherJeu(x);
                 console.log("haut");
             } else if (e.code === "ArrowRight" && arrayCells[positionCurseur][1] === 0) {
                 // Touche de direction droite
+                arrayCells[positionCurseur][5] = 0;
+                arrayCells[positionCurseur + 1][5] = "curseur";
+                afficherJeu(x);
                 console.log("droite");
             } else if (e.code === "ArrowDown" && arrayCells[positionCurseur][2] === 0) {
                 // Touche de direction bas
+                arrayCells[positionCurseur][5] = 0;
+                arrayCells[positionCurseur + x][5] = "curseur";
+                afficherJeu(x);
                 console.log("bas");
             }
+
         }
     });
+
 
 }
 
@@ -412,7 +422,7 @@ function désactiverJeu() {
     touchesDirectionnellesActivees = false;
 }
 
-window.onload = function () {
+window.onload = function() {
     créerGrille(LONGUEURE);
     labyrinthe(LONGUEURE);
     initialiserArrayCells(LONGUEURE);
@@ -431,7 +441,6 @@ document.querySelector(".générer").addEventListener('click', () => {
 
 document.querySelector(".jouer").addEventListener('click', () => {
     jeu(LONGUEURE);
-    
 });
 
 // une affectation du tableau arrayCells est composé de la manière suivante : arrayCells[position][lieu][mur droit][mur bas][mur gauche][mur haut][position du curseur]
