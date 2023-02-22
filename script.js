@@ -389,25 +389,29 @@ function jeu(x) {
                 //on enleve la donnée curseur
                 arrayCells[positionCurseur][5] = 0;
                 //on affecte la donnée curseur à la cellule suivante
-                arrayCells[positionCurseur - 1][5] = "curseur";
+                positionCurseur = positionCurseur - 1;
+                arrayCells[positionCurseur][5] = "curseur";
                 afficherJeu(x);
                 console.log("gauche");
             } else if (e.code === "ArrowUp" && arrayCells[positionCurseur][4] === 0) {
                 // Touche de direction haut
                 arrayCells[positionCurseur][5] = 0;
-                arrayCells[positionCurseur - x][5] = "curseur";
+                positionCurseur = positionCurseur - x;
+                arrayCells[positionCurseur][5] = "curseur";
                 afficherJeu(x);
                 console.log("haut");
             } else if (e.code === "ArrowRight" && arrayCells[positionCurseur][1] === 0) {
                 // Touche de direction droite
                 arrayCells[positionCurseur][5] = 0;
-                arrayCells[positionCurseur + 1][5] = "curseur";
+                positionCurseur = positionCurseur + 1;
+                arrayCells[positionCurseur][5] = "curseur";
                 afficherJeu(x);
                 console.log("droite");
             } else if (e.code === "ArrowDown" && arrayCells[positionCurseur][2] === 0) {
                 // Touche de direction bas
                 arrayCells[positionCurseur][5] = 0;
-                arrayCells[positionCurseur + x][5] = "curseur";
+                positionCurseur = positionCurseur + x;
+                arrayCells[positionCurseur][5] = "curseur";
                 afficherJeu(x);
                 console.log("bas");
             }
