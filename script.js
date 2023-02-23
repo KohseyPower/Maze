@@ -391,7 +391,7 @@ function jeu(x) {
     touchesDirectionnellesActivees = true;
     positionCurseur = positionnerCurseur(x);
     if (touchesDirectionnellesActivees) {
-        document.addEventListener("keydown", function(e) {
+        document.addEventListener("keydown", function (e) {
 
 
             if (e.code === "ArrowLeft" && arrayCells[positionCurseur][3] === 0) {
@@ -477,7 +477,7 @@ function désactiverJeu() {
 }
 
 
-window.onload = function() {
+window.onload = function () {
     créerGrille(LONGUEURE);
     labyrinthe(LONGUEURE);
     initialiserArrayCells(LONGUEURE);
@@ -494,6 +494,18 @@ document.querySelector(".générer").addEventListener('click', () => {
 
 });
 
+function arreterJeu() {
+    
+}
+
+let jeuEnCours = true;
 document.querySelector(".jouer").addEventListener('click', () => {
-    jeu(LONGUEURE);
+
+    if (jeuEnCours) {
+        jeu(LONGUEURE);
+        jeuEncours = false;
+    } else {
+        arreterJeu();
+    }
+    
 });
