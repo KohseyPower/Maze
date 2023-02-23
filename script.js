@@ -297,25 +297,26 @@ function initialiserArrayCells(x) {
     for (cell of arrC) {
         cellInfo = [TAILLE_CELL];
         //border droite
-        if (cell.style.borderRight == "medium none") {
+
+        if (cell.style.borderRight == "medium none" || cell.style.borderRight == "none") {
             cellInfo[1] = 0;
         } else {
             cellInfo[1] = 1;
         }
         //border bas
-        if (cell.style.borderBottom == "medium none") {
+        if (cell.style.borderBottom == "medium none" || cell.style.borderBottom == "none") {
             cellInfo[2] = 0;
         } else {
             cellInfo[2] = 1;
         }
         //border gauche
-        if (cell.style.borderLeft == "medium none") {
+        if (cell.style.borderLeft == "medium none" || cell.style.borderLeft == "none") {
             cellInfo[3] = 0;
         } else {
             cellInfo[3] = 1;
         }
         //border haut
-        if (cell.style.borderTop == "medium none") {
+        if (cell.style.borderTop == "medium none" || cell.style.borderTop == "none") {
             cellInfo[4] = 0;
         } else {
             cellInfo[4] = 1;
@@ -346,10 +347,15 @@ function créerCurseur(cell) {
     cell.appendChild(innerDiv);
 }
 
+
+
 function enleverAncienCurseur() {
+
+
     for (let i = 0; i < arrayCells.length; i++) {
-        if (document.querySelector(".grille").children.item(i).children.item(0) !== null) {
-            document.querySelector(".grille").children.item(i).removeChild(document.querySelector(".grille").children.item(i).children.item(0));
+        if (document.querySelector(".grille").children.item(i).hasChildNodes()) {
+            document.querySelector(".grille").children.item(i).firstElementChild.remove();
+
         }
     }
 }
@@ -364,6 +370,8 @@ function afficherJeu(x) {
             document.querySelector(".grille").children.item(i).style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--greyLight-1');
         }
         if (arrayCells[i][5] == "curseur") {
+
+
             créerCurseur(document.querySelector(".grille").children.item(i));
 
         }
@@ -382,10 +390,13 @@ function jeu(x) {
 
     touchesDirectionnellesActivees = true;
     positionCurseur = positionnerCurseur(x);
-    document.addEventListener("keydown", function(e) {
-        if (touchesDirectionnellesActivees) {
+    if (touchesDirectionnellesActivees) {
+        document.addEventListener("keydown", function(e) {
+
+
             if (e.code === "ArrowLeft" && arrayCells[positionCurseur][3] === 0) {
                 // Touche de direction gauche
+
                 //on enleve la donnée curseur
                 arrayCells[positionCurseur][5] = 0;
                 //on affecte la donnée curseur à la cellule suivante
@@ -415,16 +426,56 @@ function jeu(x) {
                 afficherJeu(x);
                 console.log("bas");
             }
+        });
+    }
 
-        }
-    });
 
+    /*
+        touchesDirectionnellesActivees = true;
+        positionCurseur = positionnerCurseur(x);
+        document.onkeydown = function(e) {
+            if (touchesDirectionnellesActivees) {
+                if (e.code === "ArrowLeft" && arrayCells[positionCurseur][3] === 0) {
+                    // Touche de direction gauche
+                    //on enleve la donnée curseur
+                    arrayCells[positionCurseur][5] = 0;
+                    //on affecte la donnée curseur à la cellule suivante
+                    positionCurseur = positionCurseur - 1;
+                    arrayCells[positionCurseur][5] = "curseur";
+                    afficherJeu(x);
+                    console.log("gauche");
+                } else if (e.code === "ArrowUp" && arrayCells[positionCurseur][4] === 0) {
+                    // Touche de direction haut
+                    arrayCells[positionCurseur][5] = 0;
+                    positionCurseur = positionCurseur - x;
+                    arrayCells[positionCurseur][5] = "curseur";
+                    afficherJeu(x);
+                    console.log("haut");
+                } else if (e.code === "ArrowRight" && arrayCells[positionCurseur][1] === 0) {
+                    // Touche de direction droite
+                    arrayCells[positionCurseur][5] = 0;
+                    positionCurseur = positionCurseur + 1;
+                    arrayCells[positionCurseur][5] = "curseur";
+                    afficherJeu(x);
+                    console.log("droite");
+                } else if (e.code === "ArrowDown" && arrayCells[positionCurseur][2] === 0) {
+                    // Touche de direction bas
+                    arrayCells[positionCurseur][5] = 0;
+                    positionCurseur = positionCurseur + x;
+                    arrayCells[positionCurseur][5] = "curseur";
+                    afficherJeu(x);
+                    console.log("bas");
+                }
+            }
+        };
+    */
 
 }
 
 function désactiverJeu() {
     touchesDirectionnellesActivees = false;
 }
+
 
 window.onload = function() {
     créerGrille(LONGUEURE);
@@ -446,5 +497,3 @@ document.querySelector(".générer").addEventListener('click', () => {
 document.querySelector(".jouer").addEventListener('click', () => {
     jeu(LONGUEURE);
 });
-
-// une affectation du tableau arrayCells est composé de la manière suivante : arrayCells[position][lieu][mur droit][mur bas][mur gauche][mur haut][position du curseur]
