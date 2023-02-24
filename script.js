@@ -386,98 +386,52 @@ function positionnerCurseur(x) {
     }
 }
 
-function jeu(x) {
+let positionCurseur;
 
+function jeu(x) {
     touchesDirectionnellesActivees = true;
     positionCurseur = positionnerCurseur(x);
     if (touchesDirectionnellesActivees) {
-        document.addEventListener("keydown", function (e) {
-
-
-            if (e.code === "ArrowLeft" && arrayCells[positionCurseur][3] === 0) {
-                // Touche de direction gauche
-
-                //on enleve la donnée curseur
-                arrayCells[positionCurseur][5] = 0;
-                //on affecte la donnée curseur à la cellule suivante
-                positionCurseur = positionCurseur - 1;
-                arrayCells[positionCurseur][5] = "curseur";
-                afficherJeu(x);
-                console.log("gauche");
-            } else if (e.code === "ArrowUp" && arrayCells[positionCurseur][4] === 0) {
-                // Touche de direction haut
-                arrayCells[positionCurseur][5] = 0;
-                positionCurseur = positionCurseur - x;
-                arrayCells[positionCurseur][5] = "curseur";
-                afficherJeu(x);
-                console.log("haut");
-            } else if (e.code === "ArrowRight" && arrayCells[positionCurseur][1] === 0) {
-                // Touche de direction droite
-                arrayCells[positionCurseur][5] = 0;
-                positionCurseur = positionCurseur + 1;
-                arrayCells[positionCurseur][5] = "curseur";
-                afficherJeu(x);
-                console.log("droite");
-            } else if (e.code === "ArrowDown" && arrayCells[positionCurseur][2] === 0) {
-                // Touche de direction bas
-                arrayCells[positionCurseur][5] = 0;
-                positionCurseur = positionCurseur + x;
-                arrayCells[positionCurseur][5] = "curseur";
-                afficherJeu(x);
-                console.log("bas");
-            }
-        });
+        document.addEventListener("keydown", myEventListenerJeu);
     }
-
-
-    /*
-        touchesDirectionnellesActivees = true;
-        positionCurseur = positionnerCurseur(x);
-        document.onkeydown = function(e) {
-            if (touchesDirectionnellesActivees) {
-                if (e.code === "ArrowLeft" && arrayCells[positionCurseur][3] === 0) {
-                    // Touche de direction gauche
-                    //on enleve la donnée curseur
-                    arrayCells[positionCurseur][5] = 0;
-                    //on affecte la donnée curseur à la cellule suivante
-                    positionCurseur = positionCurseur - 1;
-                    arrayCells[positionCurseur][5] = "curseur";
-                    afficherJeu(x);
-                    console.log("gauche");
-                } else if (e.code === "ArrowUp" && arrayCells[positionCurseur][4] === 0) {
-                    // Touche de direction haut
-                    arrayCells[positionCurseur][5] = 0;
-                    positionCurseur = positionCurseur - x;
-                    arrayCells[positionCurseur][5] = "curseur";
-                    afficherJeu(x);
-                    console.log("haut");
-                } else if (e.code === "ArrowRight" && arrayCells[positionCurseur][1] === 0) {
-                    // Touche de direction droite
-                    arrayCells[positionCurseur][5] = 0;
-                    positionCurseur = positionCurseur + 1;
-                    arrayCells[positionCurseur][5] = "curseur";
-                    afficherJeu(x);
-                    console.log("droite");
-                } else if (e.code === "ArrowDown" && arrayCells[positionCurseur][2] === 0) {
-                    // Touche de direction bas
-                    arrayCells[positionCurseur][5] = 0;
-                    positionCurseur = positionCurseur + x;
-                    arrayCells[positionCurseur][5] = "curseur";
-                    afficherJeu(x);
-                    console.log("bas");
-                }
-            }
-        };
-    */
-
 }
+
+function myEventListenerJeu(e) {
+    if (e.code === "ArrowLeft" && arrayCells[positionCurseur][3] === 0) {
+        arrayCells[positionCurseur][5] = 0;
+        positionCurseur = positionCurseur - 1;
+        arrayCells[positionCurseur][5] = "curseur";
+        afficherJeu(LONGUEURE);
+        console.log("left");
+    } else if (e.code === "ArrowUp" && arrayCells[positionCurseur][4] === 0) {
+        arrayCells[positionCurseur][5] = 0;
+        positionCurseur = positionCurseur - LONGUEURE;
+        arrayCells[positionCurseur][5] = "curseur";
+        afficherJeu(LONGUEURE);
+        console.log("up");
+    } else if (e.code === "ArrowRight" && arrayCells[positionCurseur][1] === 0) {
+        arrayCells[positionCurseur][5] = 0;
+        positionCurseur = positionCurseur + 1;
+        arrayCells[positionCurseur][5] = "curseur";
+        afficherJeu(LONGUEURE);
+        console.log("right");
+    } else if (e.code === "ArrowDown" && arrayCells[positionCurseur][2] === 0) {
+        arrayCells[positionCurseur][5] = 0;
+        positionCurseur = positionCurseur + LONGUEURE;
+        arrayCells[positionCurseur][5] = "curseur";
+        afficherJeu(LONGUEURE);
+        console.log("down");
+    }
+}
+
+
 
 function désactiverJeu() {
     touchesDirectionnellesActivees = false;
 }
 
 
-window.onload = function () {
+window.onload = function() {
     créerGrille(LONGUEURE);
     labyrinthe(LONGUEURE);
     initialiserArrayCells(LONGUEURE);
@@ -495,17 +449,21 @@ document.querySelector(".générer").addEventListener('click', () => {
 });
 
 function arreterJeu() {
-    
+
+    // supprime l'événement
+    document.removeEventListener("keydown", myEventListenerJeu);
 }
 
-let jeuEnCours = true;
+let jeuEnCours = false;
 document.querySelector(".jouer").addEventListener('click', () => {
-
-    if (jeuEnCours) {
+    if (!jeuEnCours) {
+        //créer une fonction( ou utiliser les fonctions déja créées) pour replacer le curseur au point de départ
         jeu(LONGUEURE);
-        jeuEncours = false;
+        jeuEnCours = true;
     } else {
         arreterJeu();
+        jeuEnCours = false;
     }
-    
+
+
 });
