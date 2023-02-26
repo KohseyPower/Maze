@@ -350,12 +350,9 @@ function créerCurseur(cell) {
 
 
 function enleverAncienCurseur() {
-
-
     for (let i = 0; i < arrayCells.length; i++) {
         if (document.querySelector(".grille").children.item(i).hasChildNodes()) {
             document.querySelector(".grille").children.item(i).firstElementChild.remove();
-
         }
     }
 }
@@ -370,15 +367,12 @@ function afficherJeu(x) {
             document.querySelector(".grille").children.item(i).style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--greyLight-1');
         }
         if (arrayCells[i][5] == "curseur") {
-
-
             créerCurseur(document.querySelector(".grille").children.item(i));
-
         }
     }
 }
 
-function positionnerCurseur(x) {
+function obtenirPositionCurseur(x) {
     for (let i = 0; i < x * x; i++) {
         if (arrayCells[i][5] === "curseur") {
             return i;
@@ -386,14 +380,35 @@ function positionnerCurseur(x) {
     }
 }
 
+function verifierVictoire(x) {
+    for (let i = 0; i < x * x; i++) {
+        if (arrayCells[i][5] === "curseur" && arrayCells[i][0] === "fin") {
+            return true;
+        }
+    }
+}
+
 let positionCurseur;
 
 function jeu(x) {
+
+    // change le texte du bouton Play en Stop
+    document.querySelector(".jouer").textContent = "Stop";
+    // réinitialise la position de curseur sur la case départ
+    initialisationCurseur(x);
+    //on affiche le nouveau curseur
+    for (let i = 0; i < x * x; i++) {
+        if (arrayCells[i][5] == "curseur") {
+            créerCurseur(document.querySelector(".grille").children.item(i));
+        }
+    }
+    //partie jeu
     touchesDirectionnellesActivees = true;
-    positionCurseur = positionnerCurseur(x);
+    positionCurseur = obtenirPositionCurseur(x);
     if (touchesDirectionnellesActivees) {
         document.addEventListener("keydown", myEventListenerJeu);
     }
+
 }
 
 function myEventListenerJeu(e) {
@@ -422,8 +437,14 @@ function myEventListenerJeu(e) {
         afficherJeu(LONGUEURE);
         console.log("down");
     }
+    if (verifierVictoire(LONGUEURE)) {
+        //victoire(LONGUEURE);
+    }
 }
 
+function victoire(x) {
+
+}
 
 
 function désactiverJeu() {
@@ -449,7 +470,8 @@ document.querySelector(".générer").addEventListener('click', () => {
 });
 
 function arreterJeu() {
-
+    // change le texte du bouton Stop en Play
+    document.querySelector(".jouer").textContent = "Play";
     // supprime l'événement
     document.removeEventListener("keydown", myEventListenerJeu);
 }
@@ -457,13 +479,12 @@ function arreterJeu() {
 let jeuEnCours = false;
 document.querySelector(".jouer").addEventListener('click', () => {
     if (!jeuEnCours) {
-        //créer une fonction( ou utiliser les fonctions déja créées) pour replacer le curseur au point de départ
         jeu(LONGUEURE);
         jeuEnCours = true;
+
     } else {
+        // à faire : changer la balise de stop à jouer
         arreterJeu();
         jeuEnCours = false;
     }
-
-
 });

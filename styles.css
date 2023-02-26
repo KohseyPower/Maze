@@ -13,6 +13,7 @@
 
 * {
     box-sizing: border-box;
+    font-family: Helvetica, sans-serif;
 }
 
 body {
@@ -26,6 +27,7 @@ body {
 
 h1 {
     text-align: center;
+    font-size: 2rem;
 }
 
 .options {
@@ -44,7 +46,7 @@ h1 {
     justify-content: center;
     cursor: pointer;
     transition: .2s ease;
-    font-size: 1rem;
+    font-size: 1.2rem;
     border: none;
     background-color: var(--greyLight-1);
     color: var(--greyDark);
@@ -80,6 +82,31 @@ h1 {
     height: 1rem;
     width: 1rem;
     background-color: black;
+}
+
+.victoire {
+    position: absolute;
+    height: 17rem;
+    width: 12rem;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+    border-radius: 1rem;
+    box-shadow: .3rem .3rem .6rem var(--greyLight-2), -.2rem -.2rem .5rem var(--greyLight-2);
+    font-size: 1.5rem;
+    border: solid black 0.1rem;
+    background-color: var(--greyLight-1);
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.labyrinthe-encore {
+    margin-top: 5rem;
 }
 
 @media (max-width: 790px) {
