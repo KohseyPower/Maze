@@ -438,14 +438,51 @@ function myEventListenerJeu(e) {
         console.log("down");
     }
     if (verifierVictoire(LONGUEURE)) {
-        //victoire(LONGUEURE);
+        console.log("victoire")
+        victoire();
     }
 }
 
-function victoire(x) {
+function victoire() {
+    creerFenetreVictoire();
+    arreterJeu();
+    jeuEnCours = false;
+    // bouton New Maze de victoire
+    document.querySelector(".labyrinthe-encore").addEventListener('click', () => {
+        //détruire la div victoire
+        document.querySelector(".victoire").remove();
 
+        désactiverJeu();
+        réinitialiser();
+        labyrinthe(LONGUEURE);
+        initialiserArrayCells(LONGUEURE);
+        afficherJeu(LONGUEURE);
+
+    });
 }
 
+function creerFenetreVictoire() {
+    // crée la div victoire
+    let victoireNoeud = document.createElement("div");
+    victoireNoeud.classList.add("victoire");
+
+    // crée des éléments dans div victoire
+    // crée le p Victory
+    let textVictoireNoeud = document.createElement("p");
+    textVictoireNoeud.textContent = "Victory !";
+    // crée bouton labyrinthe-encore
+    let labyrintheEncoreNoeud = document.createElement("button");
+    labyrintheEncoreNoeud.classList.add("btn");
+    labyrintheEncoreNoeud.classList.add("labyrinthe-encore");
+    labyrintheEncoreNoeud.textContent = "New maze";
+
+    //ajouts des éléments dans div victoire
+    victoireNoeud.appendChild(textVictoireNoeud);
+    victoireNoeud.appendChild(labyrintheEncoreNoeud);
+
+    // ajout de la div après la div grille
+    document.querySelector(".grille").after(victoireNoeud);
+}
 
 function désactiverJeu() {
     touchesDirectionnellesActivees = false;
