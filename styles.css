@@ -109,9 +109,14 @@ h1 {
     margin-top: 5rem;
 }
 
-@media (max-height: 1000px)or (max-width: 790px) {
+@media (max-height: 1000px),
+(max-width: 790px) {
     .grille {
         height: 20rem;
         width: 20rem;
+    }
+    .curseur {
+        height: 0.5rem;
+        width: 0.5rem;
     }
 }
