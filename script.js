@@ -439,7 +439,9 @@ function myEventListenerJeu(e) {
     }
     if (verifierVictoire(LONGUEURE)) {
         console.log("victoire")
+        pageVictoireActive = true;
         victoire();
+
     }
 }
 
@@ -447,6 +449,7 @@ function victoire() {
     creerFenetreVictoire();
     arreterJeu();
     jeuEnCours = false;
+    pageVictoireActive = true;
     // bouton New Maze de victoire
     document.querySelector(".labyrinthe-encore").addEventListener('click', () => {
         //détruire la div victoire
@@ -457,7 +460,7 @@ function victoire() {
         labyrinthe(LONGUEURE);
         initialiserArrayCells(LONGUEURE);
         afficherJeu(LONGUEURE);
-
+        pageVictoireActive = false;
     });
 }
 
@@ -496,13 +499,15 @@ window.onload = function() {
     afficherJeu(LONGUEURE);
 
 }
-
+let pageVictoireActive = false;
 document.querySelector(".générer").addEventListener('click', () => {
-    désactiverJeu();
-    réinitialiser();
-    labyrinthe(LONGUEURE);
-    initialiserArrayCells(LONGUEURE);
-    afficherJeu(LONGUEURE);
+    if (!pageVictoireActive) {
+        désactiverJeu();
+        réinitialiser();
+        labyrinthe(LONGUEURE);
+        initialiserArrayCells(LONGUEURE);
+        afficherJeu(LONGUEURE);
+    }
 
 });
 
@@ -515,13 +520,13 @@ function arreterJeu() {
 
 let jeuEnCours = false;
 document.querySelector(".jouer").addEventListener('click', () => {
-    if (!jeuEnCours) {
-        jeu(LONGUEURE);
-        jeuEnCours = true;
-
-    } else {
-        // à faire : changer la balise de stop à jouer
-        arreterJeu();
-        jeuEnCours = false;
+    if (!pageVictoireActive) {
+        if (!jeuEnCours) {
+            jeu(LONGUEURE);
+            jeuEnCours = true;
+        } else {
+            arreterJeu();
+            jeuEnCours = false;
+        }
     }
 });
