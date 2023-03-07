@@ -27,7 +27,7 @@ body {
 
 h1 {
     text-align: center;
-    font-size: 2rem;
+    font-size: calc(100% + 1vw);
 }
 
 .options {
@@ -61,16 +61,22 @@ h1 {
 }
 
 .centre {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
 }
 
-.vizualise-generation{
-    font-size: calc(100% + 1vw);
+.centre>:nth-child(n) {
+    background-color: red;
+    border: solid black 1rem;
 }
 
 .centre>:nth-child(n) {
     margin-right: 1rem;
+}
+
+.vizualise-generation {
+    font-size: calc(100% + 1vw);
+    text-align: center;
 }
 
 .parcoursProfondeur {
@@ -81,35 +87,40 @@ h1 {
 }
 
 .button-box {
-	width: 220px;
-	margin: 35px auto;
-	position: relative;
-	border-radius: 30px;
-	background: var(--greyLight-1);
+    width: 220px;
+    margin: 35px auto;
+    position: relative;
+    border-radius: 30px;
+    background: var(--greyLight-1);
     box-shadow: .3rem .3rem .6rem var(--greyLight-2), -.2rem -.2rem .5rem var(--white);
-     text-align: center;
+    text-align: center;
 }
 
 .toggle-btn {
-	padding: 10px 40px;
-	cursor: pointer;
-	background: transparent;
-	border: 0;
-	outline: none;
-	position: relative;
-	text-align: center;
+    padding: 10px 40px;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    outline: none;
+    position: relative;
+    text-align: center;
 }
 
 #btn {
-   
-	left: 0;
-	top: 0;
-	position: absolute;
-	width: 110px;
-	height: 100%;
-	background: var(--primary-light);
-	border-radius: 30px;
-	transition: .5s;
+    left: 0;
+    top: 0;
+    position: absolute;
+    width: 110px;
+    height: 100%;
+    background: var(--primary-light);
+    border-radius: 30px;
+    transition: .5s;
+}
+
+.center-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .grille {
@@ -161,8 +172,10 @@ h1 {
     margin-top: 5rem;
 }
 
+.center-left {}
+
 @media (max-height: 1000px),
-(max-width: 790px) {
+(max-width: 1050px) {
     .grille {
         height: 20rem;
         width: 20rem;
@@ -171,5 +184,16 @@ h1 {
         height: 0.5rem;
         width: 0.5rem;
     }
-    
+}
+
+@media (max-width: 680px) {
+    .center-right,
+    .center-left {
+        display: none;
+    }
+    .centre {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }
