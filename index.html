@@ -17,22 +17,21 @@
     </div>
     <div class="centre">
         <div>
-            <h2>visualization options for maze generation</h2>
-            <div class="parcoursProfondeur">
-                <p>Depth First Search</p>
-                <div class="switch">
-                    <div class="switch__1">
-                        <input id="switch-1" type="checkbox">
-                        <label for="switch-1"></label>
-                    </div>
+            <h2 class="vizualise-generation">visualization options for maze generation</h2>
+            <div class="form-box">
+                <div class="button-box">
+                    <div id="btn"></div>
+                    <button type="button" class="toggle-btn" onclick="leftClick()">Off</button>
+                    <button type="button" class="toggle-btn" onclick="rightClick()">On</button>
                 </div>
             </div>
+            
         </div>
         <div class="grille"></div>
     </div>
 
-
-    <script src="script.js"></script>
+    <script src="index.js"></script>
+    <script src="jeu.js"></script>
 </body>
 
 </html>
