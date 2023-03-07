@@ -130,8 +130,8 @@ h1 {
     display: inline-block;
     height: 0;
     width: 0;
-    border-top: 14.5px solid transparent;
-    border-bottom: 14.5px solid transparent;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
     border-left: 20px solid var(--primary);
     border-radius: 50%;
 }
