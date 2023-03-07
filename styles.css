@@ -65,10 +65,15 @@ h1 {
     grid-template-columns: repeat(3, 1fr);
 }
 
+
+/* voir la disposition de la ligne centre de la page */
+
+
+/*
 .centre>:nth-child(n) {
     background-color: red;
     border: solid black 1rem;
-}
+}*/
 
 .centre>:nth-child(n) {
     margin-right: 1rem;
@@ -112,9 +117,23 @@ h1 {
     position: absolute;
     width: 110px;
     height: 100%;
-    background: var(--primary-light);
+    background: var(--greyLight-1);
     border-radius: 30px;
     transition: .5s;
+    box-shadow: .3rem .3rem .6rem var(--greyLight-3), -.2rem -.2rem .5rem var(--white);
+    display: flex;
+    align-items: center;
+}
+
+.point {
+    margin-left: 1rem;
+    display: inline-block;
+    height: 0;
+    width: 0;
+    border-top: 14.5px solid transparent;
+    border-bottom: 14.5px solid transparent;
+    border-left: 20px solid var(--primary);
+    border-radius: 50%;
 }
 
 .center-center {
