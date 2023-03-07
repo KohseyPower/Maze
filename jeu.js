@@ -207,6 +207,8 @@ function labyrinthe(x) {
     celluleActuelle.classList.remove("nonVisitée");
     while (presenceCelluleNonVisitée() === true) {
 
+
+
         //tant que toutes les cellules n'ont pas encore été visitées
         if (voisinsNonVisitésCondition(celluleActuelle, ligneActuelle, colonneActuelle, x) === true) {
             listeVoisins = voisinsNonVisités(celluleActuelle, ligneActuelle, colonneActuelle, x);
@@ -225,6 +227,7 @@ function labyrinthe(x) {
             ligneActuelle = miseAJourLigne(celluleActuelle, ligneActuelle);
             colonneActuelle = miseAJourColonne(celluleActuelle, colonneActuelle);
 
+
         } else if (pile.length > 0) {
             // enleve le dernier element de la pile
             pile.pop();
@@ -235,8 +238,9 @@ function labyrinthe(x) {
             colonneActuelle = miseAJourColonne(celluleActuelle, colonneActuelle);
         }
     }
-
 }
+
+
 
 function réinitialiser() {
     let arrCells = document.querySelectorAll(".grille > .cellule");
@@ -530,3 +534,20 @@ document.querySelector(".jouer").addEventListener('click', () => {
         }
     }
 });
+
+let btn = document.getElementById('btn')
+let btnOn = document.querySelector(".toggleBtnOn");
+let btnOff = document.querySelector(".toggleBtnOff");
+let showDSFInProgress = false;
+
+function leftClick() {
+    btn.style.left = '0';
+    showDSFInProgress = false;
+    console.log(showDSFInProgress);
+}
+
+function rightClick() {
+    btn.style.left = '110px';
+    showDSFInProgress = true;
+    console.log(showDSFInProgress);
+}
