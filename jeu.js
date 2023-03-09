@@ -240,8 +240,6 @@ function labyrinthe(x) {
     }
 }
 
-
-
 function réinitialiser() {
     let arrCells = document.querySelectorAll(".grille > .cellule");
 
@@ -252,8 +250,6 @@ function réinitialiser() {
         e.style.border = "0.12rem solid black";
     }
 }
-
-
 
 function positionDépart(x) {
     //position au niveau de arrayCells
@@ -272,15 +268,11 @@ function positionFin(x) {
 
 }
 
-
-
 function initialiserArrayCellsEntités(x) {
     for (let i = 0; i < x * x; i++) {
         arrayCells[i][0] = 0;
     }
 }
-
-
 
 function initialisationCurseur(x) {
     for (let i = 0; i < x * x; i++) {
@@ -336,7 +328,6 @@ function initialiserArrayCells(x) {
     positionFin(x);
     //placer curseur
     initialisationCurseur(x);
-
 }
 
 function créerCurseur(cell) {
@@ -350,8 +341,6 @@ function créerCurseur(cell) {
     // Append the inner div to the outer div
     cell.appendChild(innerDiv);
 }
-
-
 
 function enleverAncienCurseur() {
     for (let i = 0; i < arrayCells.length; i++) {
@@ -412,7 +401,6 @@ function jeu(x) {
     if (touchesDirectionnellesActivees) {
         document.addEventListener("keydown", myEventListenerJeu);
     }
-
 }
 
 function myEventListenerJeu(e) {
@@ -421,28 +409,23 @@ function myEventListenerJeu(e) {
         positionCurseur = positionCurseur - 1;
         arrayCells[positionCurseur][5] = "curseur";
         afficherJeu(LONGUEURE);
-        console.log("left");
-    } else if (e.code === "ArrowUp" && arrayCells[positionCurseur][4] === 0) {
+            } else if (e.code === "ArrowUp" && arrayCells[positionCurseur][4] === 0) {
         arrayCells[positionCurseur][5] = 0;
         positionCurseur = positionCurseur - LONGUEURE;
         arrayCells[positionCurseur][5] = "curseur";
         afficherJeu(LONGUEURE);
-        console.log("up");
-    } else if (e.code === "ArrowRight" && arrayCells[positionCurseur][1] === 0) {
+            } else if (e.code === "ArrowRight" && arrayCells[positionCurseur][1] === 0) {
         arrayCells[positionCurseur][5] = 0;
         positionCurseur = positionCurseur + 1;
         arrayCells[positionCurseur][5] = "curseur";
         afficherJeu(LONGUEURE);
-        console.log("right");
-    } else if (e.code === "ArrowDown" && arrayCells[positionCurseur][2] === 0) {
+         } else if (e.code === "ArrowDown" && arrayCells[positionCurseur][2] === 0) {
         arrayCells[positionCurseur][5] = 0;
         positionCurseur = positionCurseur + LONGUEURE;
         arrayCells[positionCurseur][5] = "curseur";
         afficherJeu(LONGUEURE);
-        console.log("down");
     }
     if (verifierVictoire(LONGUEURE)) {
-        console.log("victoire")
         pageVictoireActive = true;
         victoire();
 
@@ -506,6 +489,8 @@ window.onload = function() {
 let pageVictoireActive = false;
 document.querySelector(".générer").addEventListener('click', () => {
     if (!pageVictoireActive) {
+        arreterJeu();
+        jeuEnCours = false;
         désactiverJeu();
         réinitialiser();
         labyrinthe(LONGUEURE);
@@ -524,6 +509,7 @@ function arreterJeu() {
 
 let jeuEnCours = false;
 document.querySelector(".jouer").addEventListener('click', () => {
+   
     if (!pageVictoireActive) {
         if (!jeuEnCours) {
             jeu(LONGUEURE);
@@ -535,6 +521,7 @@ document.querySelector(".jouer").addEventListener('click', () => {
     }
 });
 
+
 let btn = document.getElementById('btn')
 let btnOn = document.querySelector(".toggleBtnOn");
 let btnOff = document.querySelector(".toggleBtnOff");
@@ -542,12 +529,15 @@ let showDSFInProgress = false;
 
 function leftClick() {
     btn.style.left = '0';
+    btn.style.backgroundColor = getComputedStyle(document.body).getPropertyValue("--rougeFin");
     showDSFInProgress = false;
     console.log(showDSFInProgress);
+    
 }
 
 function rightClick() {
     btn.style.left = '110px';
+    btn.style.backgroundColor = getComputedStyle(document.body).getPropertyValue("--vertDépart");
     showDSFInProgress = true;
     console.log(showDSFInProgress);
 }

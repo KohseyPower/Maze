@@ -111,13 +111,15 @@ h1 {
     text-align: center;
 }
 
+
 #btn {
+    background-color:var(--rougeFin);
     left: 0;
     top: 0;
     position: absolute;
     width: 110px;
     height: 100%;
-    background: var(--greyLight-1);
+    background: var(--rougeFin);
     border-radius: 30px;
     transition: .5s;
     box-shadow: .3rem .3rem .6rem var(--greyLight-3), -.2rem -.2rem .5rem var(--white);
