@@ -111,9 +111,8 @@ h1 {
     text-align: center;
 }
 
-
 #btn {
-    background-color:var(--rougeFin);
+    background-color: var(--rougeFin);
     left: 0;
     top: 0;
     position: absolute;
@@ -160,6 +159,10 @@ h1 {
     height: 6.25%;
     width: 6.25%;
     border: 0.12rem solid black;
+}
+
+.cellule-actuelle {
+    background-color: var(--primary-dark);
 }
 
 .curseur {

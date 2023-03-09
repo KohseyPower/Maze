@@ -119,9 +119,6 @@ function enleverMurs(celActuelle, celVoisine, numeroLigneA, numeroColonneA) {
                             numeroColonneV = parseInt(f.substr(11));
                         }
                     }
-
-
-
                     // regarde si c'est un voisin du dessous ou du dessus
 
                 }
@@ -137,8 +134,6 @@ function enleverMurs(celActuelle, celVoisine, numeroLigneA, numeroColonneA) {
                             numeroLigneV = parseInt(f.substr(9));
                         }
                     }
-
-
                 }
             }
         }
@@ -198,19 +193,27 @@ function miseAJourColonne(cell, colonne) {
     }
 }
 
+
+
 let ligneActuelle = 0;
 let colonneActuelle = 0;
 
-function labyrinthe(x) {
+async function labyrinthe(x) {
     let pile = [];
     let celluleActuelle = document.querySelector(".cellLigne" + ligneActuelle + ".cellColonne" + colonneActuelle);
     celluleActuelle.classList.remove("nonVisitée");
     while (presenceCelluleNonVisitée() === true) {
 
-
-
         //tant que toutes les cellules n'ont pas encore été visitées
         if (voisinsNonVisitésCondition(celluleActuelle, ligneActuelle, colonneActuelle, x) === true) {
+            // si la visualisation de la generation du labyrinthe est sur On
+            if (showDSFInProgress) {
+
+                celluleActuelle.style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--primary-dark');
+                await new Promise(r => setTimeout(r, 100));
+            }
+            celluleActuelle.style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--greyLight-1');
+
             listeVoisins = voisinsNonVisités(celluleActuelle, ligneActuelle, colonneActuelle, x);
             randomVoisin = listeVoisins[Math.floor(Math.random() * listeVoisins.length)];
             // enlève les murs entre la cellule actuelle et sa voisine
@@ -228,7 +231,14 @@ function labyrinthe(x) {
             colonneActuelle = miseAJourColonne(celluleActuelle, colonneActuelle);
 
 
+
         } else if (pile.length > 0) {
+            if (showDSFInProgress) {
+
+                celluleActuelle.style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--primary-dark');
+                await new Promise(r => setTimeout(r, 100));
+            }
+            celluleActuelle.style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--greyLight-1');
             // enleve le dernier element de la pile
             pile.pop();
             // faire le dernier element de la pile la cellule actuelle
@@ -237,6 +247,7 @@ function labyrinthe(x) {
             ligneActuelle = miseAJourLigne(celluleActuelle, ligneActuelle);
             colonneActuelle = miseAJourColonne(celluleActuelle, colonneActuelle);
         }
+
     }
 }
 
@@ -409,17 +420,17 @@ function myEventListenerJeu(e) {
         positionCurseur = positionCurseur - 1;
         arrayCells[positionCurseur][5] = "curseur";
         afficherJeu(LONGUEURE);
-            } else if (e.code === "ArrowUp" && arrayCells[positionCurseur][4] === 0) {
+    } else if (e.code === "ArrowUp" && arrayCells[positionCurseur][4] === 0) {
         arrayCells[positionCurseur][5] = 0;
         positionCurseur = positionCurseur - LONGUEURE;
         arrayCells[positionCurseur][5] = "curseur";
         afficherJeu(LONGUEURE);
-            } else if (e.code === "ArrowRight" && arrayCells[positionCurseur][1] === 0) {
+    } else if (e.code === "ArrowRight" && arrayCells[positionCurseur][1] === 0) {
         arrayCells[positionCurseur][5] = 0;
         positionCurseur = positionCurseur + 1;
         arrayCells[positionCurseur][5] = "curseur";
         afficherJeu(LONGUEURE);
-         } else if (e.code === "ArrowDown" && arrayCells[positionCurseur][2] === 0) {
+    } else if (e.code === "ArrowDown" && arrayCells[positionCurseur][2] === 0) {
         arrayCells[positionCurseur][5] = 0;
         positionCurseur = positionCurseur + LONGUEURE;
         arrayCells[positionCurseur][5] = "curseur";
@@ -509,7 +520,7 @@ function arreterJeu() {
 
 let jeuEnCours = false;
 document.querySelector(".jouer").addEventListener('click', () => {
-   
+
     if (!pageVictoireActive) {
         if (!jeuEnCours) {
             jeu(LONGUEURE);
@@ -532,7 +543,7 @@ function leftClick() {
     btn.style.backgroundColor = getComputedStyle(document.body).getPropertyValue("--rougeFin");
     showDSFInProgress = false;
     console.log(showDSFInProgress);
-    
+
 }
 
 function rightClick() {
