@@ -208,7 +208,6 @@ async function labyrinthe(x) {
         if (voisinsNonVisitésCondition(celluleActuelle, ligneActuelle, colonneActuelle, x) === true) {
             // si la visualisation de la generation du labyrinthe est sur On
             if (showDSFInProgress) {
-
                 celluleActuelle.style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--primary-dark');
                 await new Promise(r => setTimeout(r, 100));
             }
@@ -234,8 +233,7 @@ async function labyrinthe(x) {
 
         } else if (pile.length > 0) {
             if (showDSFInProgress) {
-
-                celluleActuelle.style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--primary-dark');
+                celluleActuelle.style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--yellowStack');
                 await new Promise(r => setTimeout(r, 100));
             }
             celluleActuelle.style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--greyLight-1');
@@ -249,6 +247,7 @@ async function labyrinthe(x) {
         }
 
     }
+    afficherJeu(LONGUEURE);
 }
 
 function réinitialiser() {
@@ -376,6 +375,13 @@ function afficherJeu(x) {
     }
 }
 
+function réinitialiserAffichagejeu(x) {
+    for (let i = 0; i < x * x; i++) {
+        document.querySelector(".grille").children.item(i).style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--greyLight-1');
+    }
+    enleverAncienCurseur();
+}
+
 function obtenirPositionCurseur(x) {
     for (let i = 0; i < x * x; i++) {
         if (arrayCells[i][5] === "curseur") {
@@ -499,15 +505,17 @@ window.onload = function() {
 }
 let pageVictoireActive = false;
 document.querySelector(".générer").addEventListener('click', () => {
+
     if (!pageVictoireActive) {
         arreterJeu();
         jeuEnCours = false;
         désactiverJeu();
         réinitialiser();
+        réinitialiserAffichagejeu(LONGUEURE)
         labyrinthe(LONGUEURE);
         initialiserArrayCells(LONGUEURE);
-        afficherJeu(LONGUEURE);
     }
+
 
 });
 
@@ -530,6 +538,7 @@ document.querySelector(".jouer").addEventListener('click', () => {
             jeuEnCours = false;
         }
     }
+
 });
 
 
