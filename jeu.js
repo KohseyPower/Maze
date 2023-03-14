@@ -1,6 +1,7 @@
 const LONGUEURE = 16;
 let arrayCells = [LONGUEURE];
 let touchesDirectionnellesActivees = false;
+let generationEnCours = false;
 
 // Fonction qui initialise les cellules dans la grilles
 function créerGrille(x) {
@@ -199,6 +200,7 @@ let ligneActuelle = 0;
 let colonneActuelle = 0;
 
 async function labyrinthe(x) {
+    generationEnCours = true;
     let pile = [];
     let celluleActuelle = document.querySelector(".cellLigne" + ligneActuelle + ".cellColonne" + colonneActuelle);
     celluleActuelle.classList.remove("nonVisitée");
@@ -247,6 +249,7 @@ async function labyrinthe(x) {
         }
 
     }
+    generationEnCours = false;
 
 }
 
@@ -508,7 +511,7 @@ window.onload = function() {
 let pageVictoireActive = false;
 document.querySelector(".générer").addEventListener('click', () => {
 
-    if (!pageVictoireActive) {
+    if (!pageVictoireActive && !generationEnCours) {
         arreterJeu();
         jeuEnCours = false;
         désactiverJeu();
