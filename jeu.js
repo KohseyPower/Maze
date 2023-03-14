@@ -247,7 +247,7 @@ async function labyrinthe(x) {
         }
 
     }
-    afficherJeu(LONGUEURE);
+
 }
 
 function réinitialiser() {
@@ -405,13 +405,15 @@ function jeu(x) {
     // change le texte du bouton Play en Stop
     document.querySelector(".jouer").textContent = "Stop";
     // réinitialise la position de curseur sur la case départ
-    initialisationCurseur(x);
+    //initialisationCurseur(x);
     //on affiche le nouveau curseur
+    /*
     for (let i = 0; i < x * x; i++) {
         if (arrayCells[i][5] == "curseur") {
             créerCurseur(document.querySelector(".grille").children.item(i));
         }
     }
+    */
     //partie jeu
     touchesDirectionnellesActivees = true;
     positionCurseur = obtenirPositionCurseur(x);
@@ -529,8 +531,10 @@ function arreterJeu() {
 let jeuEnCours = false;
 document.querySelector(".jouer").addEventListener('click', () => {
 
+
     if (!pageVictoireActive) {
         if (!jeuEnCours) {
+            afficherJeu(LONGUEURE);
             jeu(LONGUEURE);
             jeuEnCours = true;
         } else {
@@ -551,13 +555,10 @@ function leftClick() {
     btn.style.left = '0';
     btn.style.backgroundColor = getComputedStyle(document.body).getPropertyValue("--rougeFin");
     showDSFInProgress = false;
-    console.log(showDSFInProgress);
-
 }
 
 function rightClick() {
     btn.style.left = '110px';
     btn.style.backgroundColor = getComputedStyle(document.body).getPropertyValue("--vertDépart");
     showDSFInProgress = true;
-    console.log(showDSFInProgress);
 }
