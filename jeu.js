@@ -426,6 +426,8 @@ function jeu(x) {
 }
 
 function myEventListenerJeu(e) {
+    console.log(positionCurseur);
+    console.log(arrayCells);
     if (e.code === "ArrowLeft" && arrayCells[positionCurseur][3] === 0) {
         arrayCells[positionCurseur][5] = 0;
         positionCurseur = positionCurseur - 1;
@@ -518,7 +520,7 @@ document.querySelector(".générer").addEventListener('click', () => {
         réinitialiser();
         réinitialiserAffichagejeu(LONGUEURE)
         labyrinthe(LONGUEURE);
-        initialiserArrayCells(LONGUEURE);
+        //initialiserArrayCells(LONGUEURE);
     }
 
 
@@ -533,10 +535,12 @@ function arreterJeu() {
 
 let jeuEnCours = false;
 document.querySelector(".jouer").addEventListener('click', () => {
-
-
-    if (!pageVictoireActive) {
+    /*console.log("pageVictoireActive : " + pageVictoireActive);
+    console.log("generationEnCours : " + generationEnCours);
+    console.log("jeuEnCours : " + jeuEnCours);*/
+    if (!pageVictoireActive && !generationEnCours) {
         if (!jeuEnCours) {
+            initialiserArrayCells(LONGUEURE);
             afficherJeu(LONGUEURE);
             jeu(LONGUEURE);
             jeuEnCours = true;
