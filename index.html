@@ -27,9 +27,10 @@
                     <button type="button" class="toggle-btn toggleBtnOn" onclick="rightClick()">On</button>
                 </div>
             </div>
-            <div>
-                <input class="slideSpeed" type="range" oninput="vitesseGeneration(this.value)">
-            </div>
+            <p class="vizualise-generation">Speed :</p>
+
+            <input class="slideSpeed" type="range" min="2" max="500" oninput="miseAJourVitesseGeneration(this.value)">
+
         </div>
         <div class="center-center">
             <div class="grille"> </div>

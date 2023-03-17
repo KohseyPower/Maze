@@ -2,6 +2,7 @@ const LONGUEURE = 16;
 let arrayCells = [LONGUEURE];
 let touchesDirectionnellesActivees = false;
 let generationEnCours = false;
+let vitesseGeneration = 50;
 
 // Fonction qui initialise les cellules dans la grilles
 function créerGrille(x) {
@@ -211,7 +212,7 @@ async function labyrinthe(x) {
             // si la visualisation de la generation du labyrinthe est sur On
             if (showDSFInProgress) {
                 celluleActuelle.style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--primary-dark');
-                await new Promise(r => setTimeout(r, 100));
+                await new Promise(r => setTimeout(r, 1000 / vitesseGeneration));
             }
             celluleActuelle.style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--greyLight-1');
 
@@ -236,7 +237,7 @@ async function labyrinthe(x) {
         } else if (pile.length > 0) {
             if (showDSFInProgress) {
                 celluleActuelle.style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--yellowStack');
-                await new Promise(r => setTimeout(r, 100));
+                await new Promise(r => setTimeout(r, 1000 / vitesseGeneration));
             }
             celluleActuelle.style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--greyLight-1');
             // enleve le dernier element de la pile
@@ -568,4 +569,8 @@ function rightClick() {
     btn.style.left = '110px';
     btn.style.backgroundColor = getComputedStyle(document.body).getPropertyValue("--vertDépart");
     showDSFInProgress = true;
+}
+
+function miseAJourVitesseGeneration(val) {
+    vitesseGeneration = val;
 }
