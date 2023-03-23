@@ -212,7 +212,7 @@ async function labyrinthe(x) {
             // si la visualisation de la generation du labyrinthe est sur On
             if (showDSFInProgress) {
                 celluleActuelle.style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--primary-dark');
-                await new Promise(r => setTimeout(r, 1000 / vitesseGeneration));
+                await new Promise(r => setTimeout(r, 1000/(1+ vitesseGeneration/7)));
             }
             celluleActuelle.style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--greyLight-1');
 
@@ -237,7 +237,7 @@ async function labyrinthe(x) {
         } else if (pile.length > 0) {
             if (showDSFInProgress) {
                 celluleActuelle.style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--yellowStack');
-                await new Promise(r => setTimeout(r, 1000 / vitesseGeneration));
+                await new Promise(r => setTimeout(r,1000/(1+ vitesseGeneration/7)));
             }
             celluleActuelle.style.backgroundColor = getComputedStyle(document.body).getPropertyValue('--greyLight-1');
             // enleve le dernier element de la pile
